@@ -1,6 +1,7 @@
 package com.web.utils;
 
 import java.io.BufferedInputStream;
+import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -36,9 +37,11 @@ public class PropertiesUtil {
 	 */
 	public static void loadByPropPath(String propPath) {
 		try {
-			InputStream in = new FileInputStream(propPath);
-			props.load(in);
-			in.close();
+			InputStream is = new FileInputStream(propPath);
+			// 字节流是无法读取中文的，所以采取reader把inputStream转换成reader用字符流来读取中文
+			BufferedReader br = new BufferedReader(new InputStreamReader(is));
+			props.load(br);
+			br.close();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {

@@ -33,15 +33,13 @@
 	 -->
 	
 	<!-- 引入资源配置文件 -->
-	<!-- 
 	<bean id="configProperties" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
         <property name="locations">
             <list>
-                <value>classpath:config/common.properties</value>
+                <value>classpath:common.properties</value>
             </list>
         </property>
     </bean>
-     -->
 	 
 	<!-- 自动扫描该包，注入业务接口层,逻辑业务层 -->
 	<!-- 

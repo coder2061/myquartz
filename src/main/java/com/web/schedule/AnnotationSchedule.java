@@ -5,7 +5,7 @@ import java.util.Date;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import com.web.utils.DateUtils;
+import com.web.utils.DateUtil;
 
 /**
  * quartz作业调度注解实现
@@ -21,7 +21,7 @@ public class AnnotationSchedule {
 	@Scheduled(cron = "0 0 0/2 * * ?")
 	public void testAnnotation() {
 		System.out.println("定时任务：@Scheduled注解实现，时间："
-				+ DateUtils.getDateStrByPattern(new Date(),
+				+ DateUtil.getDateStrByPattern(new Date(),
 						"yyyy-MM-dd HH:mm:ss"));
 	}
 

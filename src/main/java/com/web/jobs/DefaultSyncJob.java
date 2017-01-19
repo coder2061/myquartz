@@ -9,7 +9,7 @@ import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.quartz.JobKey;
 
-import com.web.utils.DateUtils;
+import com.web.utils.DateUtil;
 
 /**   
  * 定时任务运行工厂类，任务运行入口，即Job实现类(无状态的Job)
@@ -24,7 +24,7 @@ public class DefaultSyncJob implements Job {
         JobDetail jobDetail = context.getJobDetail();
     	JobKey jobKey = jobDetail.getKey();
     	System.out.println("有状态同步定时任务，时间："
-    			+ DateUtils.getDateStrByPattern(new Date(), "yyyy-MM-dd HH:mm:ss") 
+    			+ DateUtil.getDateStrByPattern(new Date(), "yyyy-MM-dd HH:mm:ss") 
     			+ "任务名称 :[" + jobKey.getName() + "]，任务分组:[" + jobKey.getGroup() + "]");
     }
 }

@@ -11,7 +11,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.scheduling.quartz.QuartzJobBean;
 
 import com.web.service.SchedulerService;
-import com.web.utils.DateUtils;
+import com.web.utils.DateUtil;
 
 /**
  * spring定义quartz job需要继承类QuartzJobBean
@@ -47,7 +47,7 @@ public class MyQuartzJobBean extends QuartzJobBean {
 			e.printStackTrace();
 		}
 		System.out.println("定时任务：QuartzJobBean类继承，时间："
-				+ DateUtils.getDateStrByPattern(new Date(),
+				+ DateUtil.getDateStrByPattern(new Date(),
 						"yyyy-MM-dd HH:mm:ss"));
 	}
 }

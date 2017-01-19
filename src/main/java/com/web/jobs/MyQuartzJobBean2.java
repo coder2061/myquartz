@@ -6,7 +6,7 @@ import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.springframework.scheduling.quartz.QuartzJobBean;
 
-import com.web.utils.DateUtils;
+import com.web.utils.DateUtil;
 
 public class MyQuartzJobBean2 extends QuartzJobBean {
 
@@ -14,7 +14,7 @@ public class MyQuartzJobBean2 extends QuartzJobBean {
 	protected void executeInternal(JobExecutionContext context)
 			throws JobExecutionException {
 		System.out.println("定时任务：QuartzJobBean类继承，时间："
-				+ DateUtils.getDateStrByPattern(new Date(),
+				+ DateUtil.getDateStrByPattern(new Date(),
 						"yyyy-MM-dd HH:mm:ss"));
 	}
 

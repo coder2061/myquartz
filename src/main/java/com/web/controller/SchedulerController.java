@@ -21,17 +21,18 @@ import com.web.entity.SchedulerJob;
 @Controller
 @RequestMapping("/qrtz")
 public class SchedulerController {
-	private static Logger log = LoggerFactory.getLogger(SchedulerController.class);
-	 /*
-	  * spring注入schedulerFactoryBean,实际返回的是Scheduler对象，
-	  * 可以直接声明Scheduler对象，不必再调用schedulerFactory的getScheduler()；
-	  * 这是getBean("bean")和getBean("&bean")的区别
-	  */
+	private static Logger log = LoggerFactory
+			.getLogger(SchedulerController.class);
+	/*
+	 * spring注入schedulerFactoryBean,实际返回的是Scheduler对象，
+	 * 可以直接声明Scheduler对象，不必再调用schedulerFactory的getScheduler()；
+	 * 这是getBean("bean")和getBean("&bean")的区别
+	 */
 	@Resource
 	private Scheduler scheduler;
-	
+
 	@RequestMapping(value = "/add", method = RequestMethod.GET)
-	public void add() {
+	public String add() {
 		try {
 			for (int i = 0; i < 5; i++) {
 				SchedulerJob job = new SchedulerJob();
@@ -39,7 +40,7 @@ public class SchedulerController {
 				job.setJobName("data_import" + i);
 				job.setJobGroup("dataWork2");
 				job.setJobStatus("1");
-				job.setCronExpression("0/10 * * * * ?");
+				job.setCronExpression("* 0/10 * * * ?");
 				job.setDescription("数据导入任务");
 				SchedulerJobManager.addJob(scheduler, job);
 			}
@@ -49,39 +50,44 @@ public class SchedulerController {
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
+		return "qrtz/jobs";
 	}
-	
+
 	@RequestMapping(value = "/jobs", method = RequestMethod.GET)
 	public ModelAndView jobs() {
 		ModelAndView model = new ModelAndView();
 		try {
-			List<SchedulerJob> jobs = SchedulerJobManager.getPlannedSchedulerJobs(scheduler);
-			List<SchedulerJob> jobs2 = SchedulerJobManager.getRunningSchedulerJobs(scheduler);
-			if (jobs!=null) {
+			List<SchedulerJob> jobs = SchedulerJobManager
+					.getPlannedSchedulerJobs(scheduler);
+			List<SchedulerJob> jobs2 = SchedulerJobManager
+					.getRunningSchedulerJobs(scheduler);
+			if (jobs != null) {
 				System.out.println("----jobs----" + jobs.size());
 			}
-			if (jobs2!=null) {
+			if (jobs2 != null) {
 				System.out.println("----jobs2----" + jobs2.size());
 			}
-			
+
 			model.addObject("jobs", jobs);
 		} catch (SchedulerException e) {
 			log.error(e.getMessage());
 			e.printStackTrace();
 		}
-		
-		model.setViewName("jsp/index");
+
+		model.setViewName("qrtz/jobs");
 		return model;
 	}
-	
+
 	@RequestMapping(value = "/info", method = RequestMethod.GET)
 	public void schedulerInfo() {
 		try {
-			System.out.println("----id----" + scheduler.getSchedulerInstanceId());
+			System.out.println("----id----"
+					+ scheduler.getSchedulerInstanceId());
 			System.out.println("----name----" + scheduler.getSchedulerName());
 			System.out.println("----isStarted----" + scheduler.isStarted());
 			System.out.println("----isShutdown----" + scheduler.isShutdown());
-			System.out.println("----isInStandbyMode----" + scheduler.isInStandbyMode());
+			System.out.println("----isInStandbyMode----"
+					+ scheduler.isInStandbyMode());
 			if (!scheduler.isShutdown()) {
 				scheduler.start();
 			}
@@ -89,12 +95,12 @@ public class SchedulerController {
 			for (String name : calendarNames) {
 				System.out.println("----calendarNames----" + name);
 			}
-			
+
 			List<String> jobGroupNames = scheduler.getJobGroupNames();
 			for (String name : jobGroupNames) {
 				System.out.println("----jobGroupNames----" + name);
 			}
-			
+
 			List<String> triggerGroupNames = scheduler.getTriggerGroupNames();
 			for (String name : triggerGroupNames) {
 				System.out.println("----triggerGroupNames----" + name);
@@ -103,8 +109,7 @@ public class SchedulerController {
 			e.printStackTrace();
 		}
 	}
-	
-	
+
 	@RequestMapping(value = "/pause", method = RequestMethod.GET)
 	public void pause(HttpServletRequest request) {
 		try {
@@ -120,6 +125,7 @@ public class SchedulerController {
 			e.printStackTrace();
 		}
 	}
+
 	@RequestMapping(value = "/resume", method = RequestMethod.GET)
 	public void resume(HttpServletRequest request) {
 		try {
@@ -135,6 +141,7 @@ public class SchedulerController {
 			e.printStackTrace();
 		}
 	}
+
 	@RequestMapping(value = "/delete", method = RequestMethod.GET)
 	public void delete(HttpServletRequest request) {
 		try {
@@ -150,9 +157,7 @@ public class SchedulerController {
 			e.printStackTrace();
 		}
 	}
-	
-	
-	
+
 	@RequestMapping(value = "/start", method = RequestMethod.GET)
 	public void start() {
 		try {
@@ -164,6 +169,7 @@ public class SchedulerController {
 			e.printStackTrace();
 		}
 	}
+
 	@RequestMapping(value = "/startDelayed", method = RequestMethod.GET)
 	public void startDelayed() {
 		try {
@@ -175,6 +181,7 @@ public class SchedulerController {
 			e.printStackTrace();
 		}
 	}
+
 	@RequestMapping(value = "/standby", method = RequestMethod.GET)
 	public void standby() {
 		try {
@@ -186,6 +193,7 @@ public class SchedulerController {
 			e.printStackTrace();
 		}
 	}
+
 	@RequestMapping(value = "/pauseAll", method = RequestMethod.GET)
 	public void pauseAll() {
 		try {
@@ -197,6 +205,7 @@ public class SchedulerController {
 			e.printStackTrace();
 		}
 	}
+
 	@RequestMapping(value = "/resumeAll", method = RequestMethod.GET)
 	public void resumeAll() {
 		try {
@@ -208,8 +217,9 @@ public class SchedulerController {
 			e.printStackTrace();
 		}
 	}
+
 	@RequestMapping(value = "/clear", method = RequestMethod.GET)
-	public void clear() {
+	public String clear() {
 		try {
 			if (!scheduler.isShutdown()) {
 				scheduler.start();
@@ -218,7 +228,9 @@ public class SchedulerController {
 		} catch (SchedulerException e) {
 			e.printStackTrace();
 		}
+		return "qrtz/jobs";
 	}
+
 	@RequestMapping(value = "/shutdown", method = RequestMethod.GET)
 	public void shutdown() {
 		try {
