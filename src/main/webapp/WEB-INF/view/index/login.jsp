@@ -25,7 +25,7 @@
 
 <div class="container">
 
-    <form class="form-signin" action="/myquartz/login">
+    <form class="form-signin" action="/myquartz/login" method="post">
     
         <div class="form-signin-heading text-center">
             <h1 class="sign-title">Sign In</h1>
@@ -54,30 +54,30 @@
                 </span>
             </label>
         </div>
-
-        <!-- Modal -->
-        <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="myModal" class="modal fade">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title">Forgot Password ?</h4>
-                    </div>
-                    <div class="modal-body">
-                        <p>Enter your e-mail address below to reset your password.</p>
-                        <input type="text" name="email" placeholder="Email" autocomplete="off" class="form-control placeholder-no-fix">
-
-                    </div>
-                    <div class="modal-footer">
-                        <button data-dismiss="modal" class="btn btn-default" type="button">Cancel</button>
-                        <button class="btn btn-primary" type="button">Submit</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- modal -->
-
+        
     </form>
+    
+   <!-- Modal -->
+   <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="myModal" class="modal fade">
+       <div class="modal-dialog">
+           <div class="modal-content">
+               <div class="modal-header">
+                   <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                   <h4 class="modal-title">Forgot Password ?</h4>
+               </div>
+               <div class="modal-body">
+                   <p>Enter your e-mail address below to reset your password.</p>
+                   <input type="text" name="email" placeholder="Email" autocomplete="off" class="form-control placeholder-no-fix">
+
+               </div>
+               <div class="modal-footer">
+                   <button data-dismiss="modal" class="btn btn-default" type="button">Cancel</button>
+                   <button class="btn btn-primary" type="button">Submit</button>
+               </div>
+           </div>
+       </div>
+   </div>
+   <!-- modal -->
 
 </div>
 
@@ -89,26 +89,49 @@
 <script src="common/js/common.js"></script>
 <script >
 	$(function() {
+		/* 
 		$(".form-signin").submit(function() {
             var account = $("account").val();
             var msg = "";
-            if (isBlank(account)) {
-				
-			} else {
-
-			}
             var password = $("password").val();
-			if (isBlank(password)) {
-				
-			} else {
-
+            if (isBlank(account) && isBlank(password)) {
+				msg = "登录账户和密码不能为空";
+			} else if (isBlank(account)) {
+				msg = "登录账户不能为空";
+			} else if (isBlank(password)) {
+				msg = "登录密码不能为空";
 			}
-            alert(msg);
+            if (notBlank(msg)) {
+	            alert(msg.trim());
+			}
         });
-        $("#pause").click(function() 
+         */
+        $("#pause").click(function() {
             var jobName = $(this).siblings("td.jobName").val();
             var jobGroup = $(this).siblings("td.jobGroup").val();
-            alert(jobGroup)
+            alert(jobGroup);
+
+            $.ajax({
+        		type : "POST",
+        		url : "myquartz/login",
+        		data : "cmdID=" + cmdID,
+        		dataType : "json",
+        		async : false,
+        		success : function(data) {
+        			var cardList = data.cardList;
+        			var str = "该商品未设置储值会员卡价格!";
+        			if (cardList.length > 0) {
+        				str = "<table style='width: 230px;text-align: left;'>";
+        				$.each(cardList, function(i, items) {
+        					str += "<tr><td width='70%'>" + items.Name + "</td>"
+        							+ "<td width='30%'>" + items.Price
+        							+ "&nbsp;元</td></tr>";
+        				})
+        				str += "</table>";
+        			}
+        			$("#cardPrices").html(str);
+        		}
+        	});
         });
     });
 </script>

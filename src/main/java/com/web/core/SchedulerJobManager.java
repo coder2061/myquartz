@@ -330,7 +330,7 @@ public class SchedulerJobManager {
 		}
 		job.setPriority(trigger.getPriority());
 		job.setNextFireTime(trigger.getNextFireTime().getTime());
-		job.setPrevFireTime(trigger.getPreviousFireTime().getTime());
+		job.setPrevFireTime(trigger.getPreviousFireTime()==null ? null : trigger.getPreviousFireTime().getTime());
 
 		Trigger.TriggerState triggerState = scheduler
 				.getTriggerState(triggerKey);

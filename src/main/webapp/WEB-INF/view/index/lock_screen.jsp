@@ -31,7 +31,7 @@
             </div>
             <h1>Jonathan Smith</h1>
             <div class="row">
-                <form action="index.html" class="form-inline" role="form">
+                <form action="/myquartz/unlock" class="form-inline" role="form" method="post">
                     <div class="form-group col-md-12 col-sm-12 col-xs-12">
                         <input type="password" class="form-control lock-input" placeholder="Password">
                         <button type="submit" class="btn btn-lock pull-right">

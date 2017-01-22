@@ -6,6 +6,12 @@ import com.web.dto.UserDto;
 public interface UserService {
 	ResponseDto login(UserDto userDto);
 
+	void lock();
+	
+	void unlock();
+
+	void logout();
+
 	ResponseDto register(UserDto userDto);
 
 }

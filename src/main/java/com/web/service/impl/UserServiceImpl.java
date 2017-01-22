@@ -62,7 +62,7 @@ public class UserServiceImpl implements UserService {
 		Map<Object, Object> userCache = redisManager.getCacheMap(userid);
 		String token = null;
 		// 判断是否已登录
-		if (userCache != null) {
+		if (userCache != null && !userCache.isEmpty()) {
 			// 判断已登录IP地址是否是当前IP地址
 			if (!ip.equals(userCache.get("ip"))) {
 				resp.setCode("3");
@@ -100,6 +100,21 @@ public class UserServiceImpl implements UserService {
 			resp.setMsg("用户登录失败");
 		}
 		return resp;
+	}
+	
+	@Override
+	public void lock() {
+		
+	}
+	
+	@Override
+	public void unlock() {
+		
+	}
+	
+	@Override
+	public void logout() {
+		redisManager.remove("123456");
 	}
 
 	@Override

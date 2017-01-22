@@ -33,13 +33,37 @@ function IsSpecialChar(str) {
 	}
 }
 /**
+ * 去掉字符串左右空格
+ * 
+ * @param str
+ * @returns
+ */
+function trim(str) {
+	return str.replace(/(^\s*)|(\s*$)/g, "");
+}
+/**
+ * 去掉字符串全部空格
+ * 
+ * @param str
+ * @param isGlobal
+ * @returns
+ */
+function trim(str, isGlobal) {
+	var result;
+	result = str.replace(/(^\s+)|(\s+$)/g, "");
+	if (isGlobal) {
+		result = result.replace(/\s/g, "");
+	}
+	return result;
+}
+/**
  * 是否为空
  * 
  * @param val
  * @returns {Boolean}
  */
 function isBlank(val) {
-	if (val == null || val == "" || val == undefined) {
+	if (val == undefined || val == null || trim(val) == "") {
 		return true;
 	} else {
 		return false;
@@ -52,7 +76,7 @@ function isBlank(val) {
  * @returns {Boolean}
  */
 function notBlank(val) {
-	if (val != null && val != "" && val != undefined) {
+	if (val != undefined && val != null && trim(val) != "") {
 		return true;
 	} else {
 		return false;
@@ -60,6 +84,7 @@ function notBlank(val) {
 }
 /**
  * 为空取值
+ * 
  * @param str
  * @param str2
  * @returns
