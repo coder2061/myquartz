@@ -74,8 +74,8 @@
 					            <th>任务名称</th>
 					            <th>任务分组</th>
 					            <th>corn表达式</th>
-					            <th class="hidden-phone">调度类</th>
-					            <th class="hidden-phone">操作</th>
+					            <th>调度类</th>
+					            <th>操作</th>
 					        </tr>
 				        </thead>
 				        <tbody>
@@ -84,8 +84,8 @@
 						            <td>${item.jobName}</td>
 						            <td>${item.jobGroup}</td>
 						            <td>${item.cronExpression}</td>
-						            <td class="center hidden-phone">${item.jobClassName}</td>
-						            <td class="center hidden-phone">
+						            <td>${item.jobClassName}</td>
+						            <td>
 									  	<button class="btn btn-default" type="button"><i class="fa fa-plus"></i> create</button>
                                         <button class="btn btn-success" type="button"><i class="fa fa-edit"></i> modify</button>
                                         <button class="btn btn-primary" type="button"><i class="fa fa-square"></i> pause</button>
@@ -101,8 +101,8 @@
 					            <th>JobName</th>
 					            <th>JobGroup</th>
 					            <th>CronExpression</th>
-					            <th class="hidden-phone">JobClassName</th>
-					            <th class="hidden-phone">Operation</th>
+					            <th>JobClassName</th>
+					            <th>Operation</th>
 					        </tr>
 				        </tfoot>
 			        </table>
